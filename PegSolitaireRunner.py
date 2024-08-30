@@ -1,5 +1,6 @@
 import logging, datetime
 from KinkaidDecorators import log_start_stop_method
+import Board, Peg
 
 logging.basicConfig(level=logging.INFO)  # simple version to the output console
 # logging.basicConfig(level=logging.DEBUG, filename=f"log {datetime.datetime.now():%m-%d@%H:%M:%S}.txt",
@@ -14,7 +15,15 @@ class PegSolitaireRunner:
     @log_start_stop_method
     def play_game(self):  # note: this is complaining (grey underline) that it could be static because it doesn't use
         # any variables or methods from "self." Once you do, it will stop pestering you about it.
-        pass
+        game_board = Board
+        game_board.create_board
+        while not game_board.game_over:
+            game_board.print_board
+            peg_to_move = input("What peg do you want to move? ")
+                #is_legal(peg_to_move,
+            place_to_move = input("What place do you want to move to? ")
+
+
 
 if __name__ == "__main__":
     game = PegSolitaireRunner()
