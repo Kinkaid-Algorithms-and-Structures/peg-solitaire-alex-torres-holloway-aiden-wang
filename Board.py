@@ -1,4 +1,4 @@
-import Peg
+from Peg import Peg
 class Board:
 
     def __init__(self):
@@ -12,16 +12,16 @@ class Board:
 
     def print_board(self):
         for i in range(len(self.board)):
+            print("")
             for j in range(len(self.board[i])):
                 if self.board[i][j] == -1:
-                    print("o")
+                    print("o", end='')
                 else:
-                    print("+")
+                    print("+", end='')
 
     def game_over(self):
         pass
 
-    def
 
 
 
