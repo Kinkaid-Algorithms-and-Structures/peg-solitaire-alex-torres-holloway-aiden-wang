@@ -19,7 +19,13 @@ class Board:
                 else:
                     print("+", end='')
 
+    def is_legal_move(self, current_pos, target_position):
+        current_index = None
+        target_index = None
+        print(current_index, target_index)
+
     def game_over(self):
+        #test
         pass
 
 

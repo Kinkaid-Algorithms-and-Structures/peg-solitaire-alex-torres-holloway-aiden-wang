@@ -21,9 +21,9 @@ class PegSolitaireRunner:
         while not game_board.game_over():
             game_board.print_board()
             print("")
-            peg_to_move = input("What peg do you want to move? ")
-                #is_legal(peg_to_move,
-            place_to_move = input("What place do you want to move to? ")
+            peg_to_move = input("What peg do you want to move? ").capitalize()
+            place_to_move = input("What place do you want to move to? ").capitalize()
+            Board.is_legal_move(game_board, peg_to_move, place_to_move)
 
 
 
