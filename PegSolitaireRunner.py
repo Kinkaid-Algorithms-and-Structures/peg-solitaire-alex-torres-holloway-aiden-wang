@@ -11,6 +11,7 @@ logging.basicConfig(level=logging.INFO)  # simple version to the output console
 class PegSolitaireRunner:
     def __init__(self):
         logging.info("Initializing.")
+        game = True
         # add any code you want to set up variables for the game.
     
     @log_start_stop_method
@@ -18,6 +19,14 @@ class PegSolitaireRunner:
         # any variables or methods from "self." Once you do, it will stop pestering you about it.
         game_board = Board()
         game_board.create_board()
+        print("Welcome to peg solitaire!")
+        while game:
+            game_board.print_board()
+            peg_to_move = input("What peg do you want to move? ")
+            place_to_move = input("What place do you want to move to? ")
+            if game_board.is_legal_move(peg_to_move, place_to_move):
+
+
 
 
 
