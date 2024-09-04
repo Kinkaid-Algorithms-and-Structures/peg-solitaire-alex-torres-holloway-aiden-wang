@@ -35,6 +35,7 @@ class PegSolitaireRunner:
 
 
 
+
 if __name__ == "__main__":
     game = PegSolitaireRunner()
     game.play_game()
