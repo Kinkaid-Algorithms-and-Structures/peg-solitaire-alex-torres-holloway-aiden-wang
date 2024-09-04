@@ -3,8 +3,5 @@ class Peg:
         self.x = x
         self.y = y
 
-    def get_pos(self) -> list:
-        return [self.x, self.y]
-
-    def has_neighbors(self) -> bool:
-        pass
+    def get_pos(self):
+        return self.x, self.y
