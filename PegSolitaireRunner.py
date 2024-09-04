@@ -18,12 +18,6 @@ class PegSolitaireRunner:
         # any variables or methods from "self." Once you do, it will stop pestering you about it.
         game_board = Board()
         game_board.create_board()
-        while not game_board.game_over():
-            game_board.print_board()
-            print("")
-            peg_to_move = input("What peg do you want to move? ").capitalize()
-            place_to_move = input("What place do you want to move to? ").capitalize()
-            Board.is_legal_move(game_board, peg_to_move, place_to_move)
 
 
 
