@@ -31,6 +31,10 @@ class Board:
         #test
         pass
 
+    def each_has_neighbors(self):
+        #call check if has neighbors in each peg
+        pass
+
 
 
 
