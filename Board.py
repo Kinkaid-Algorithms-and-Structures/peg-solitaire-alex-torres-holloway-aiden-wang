@@ -1,6 +1,6 @@
 from Peg import Peg
+import random
 class Board:
-
     def __init__(self):
         self.board = []
         self.num_row = 5
@@ -11,7 +11,6 @@ class Board:
                 peg = Peg(i,j)
                 row.append(peg)
             self.board.append(row)
-            print(self.board)
 
     def legal_move(self):
         pass
