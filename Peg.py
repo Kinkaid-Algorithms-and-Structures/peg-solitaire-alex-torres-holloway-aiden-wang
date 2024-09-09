@@ -8,3 +8,7 @@ class Peg:
 
     def has_neighbors(self) -> bool:
         pass
+
+    def update_pos(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
