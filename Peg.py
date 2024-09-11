@@ -1,10 +1,18 @@
 class Peg:
-    def __init__(self, x, y, alive):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.alive = True
+        self.empty = False
 
-    def get_pos(self):
-        return self.x, self.y
-    def is_alive(self):
-        return self.alive
+    def get_pos(self) -> list:
+        return [self.x, self.y]
+
+    def update_pos(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
+
+    def is_empty(self) -> bool:
+        return self.empty
+
+    def set_empty(self, emp: bool) -> bool:
+        self.empty = emp
