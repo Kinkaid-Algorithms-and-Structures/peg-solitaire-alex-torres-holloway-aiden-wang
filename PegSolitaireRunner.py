@@ -18,6 +18,9 @@ class PegSolitaireRunner:
         # any variables or methods from "self." Once you do, it will stop pestering you about it.
         game_board = Board()
         game_board.create_board()
+        game_board.print_board()
+        peg_to_move = input("What peg do you want to move?: ").capitalize()
+
         # while not game_board.game_over():
         #     game_board.print_board()
         #     print("")
