@@ -1,5 +1,7 @@
 from math import floor
 import random
+from typing import final
+
 from Peg import Peg
 
 class Board:
@@ -47,7 +49,6 @@ class Board:
                 return False
         return True
 
-
     def move(self, current_peg: Peg, target_peg: Peg) -> None:
         init_pos = current_peg.get_pos()
         final_pos = target_peg.get_pos()
@@ -55,7 +56,14 @@ class Board:
         self.board[final_pos[0]][final_pos[1]].set_empty(False)
 
     def remove(self, current_pos: Peg, target_pos: Peg) -> None:
-        pass
+        init_pos = current_pos.get_pos()
+        final_pos = target_pos.get_pos()
+        if abs(init_pos[1]-final_pos[1]) == 2:
+            self.board[(init_pos[0]+final_pos[0])//2][(init_pos[1]+final_pos[1])//2].set_empty(True)
+        if init_pos[1] == final_pos[1]:
+            self.board[(init_pos[0]+final_pos[0])//2][(init_pos[1]+final_pos[1])//2].set_empty(True)
+        if init_pos[0]==final_pos[0]:
+            self.board[(init_pos[0]+final_pos[0])//2][(init_pos[1]+final_pos[1])//2].set_empty(True)
 
     def get_peg_count(self) -> int:
         count = 0
