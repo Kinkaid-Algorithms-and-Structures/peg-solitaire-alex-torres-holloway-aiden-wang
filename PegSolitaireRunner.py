@@ -25,8 +25,8 @@ class PegSolitaireRunner:
         while game:
             game_board.print_board()
             while True:
-                cur_row, cur_col = input("\nRow and column of peg to move; separate row and col with spaces (start from 0 and spaces don't count) ").split()
-                to_row, to_col = input("Row and column of place to move to; separate row and col with spaces (start from 0 and spaces don't count) ").split()
+                cur_row, cur_col = input("\nRow and column of peg to move; separate row and col with spaces (start from 0 and put a space between x and y) ").replace(",", "").split()
+                to_row, to_col = input("Row and column of place to move to; separate row and col with spaces (start from 0 and put a space between x and y) ").replace(",","").split()
                 if not game_board.in_bounds(cur_row, cur_col) or not game_board.in_bounds(to_row, to_col):
                     print("Move out of bounds. Try another move.")
                     continue
