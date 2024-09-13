@@ -1,4 +1,3 @@
-from math import floor
 import random
 from Peg import Peg
 
@@ -11,9 +10,10 @@ class Board:
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 self.board[i][j] = Peg(i, j)
-        row = random.randint(0, len(self.board)-1)
-        col = random.randint(0, len(self.board[row])-1)
-        self.board[row][col].set_empty(True)
+        for j in range(15):
+            row = random.randint(0, len(self.board)-1)
+            col = random.randint(0, len(self.board[row])-1)
+            self.board[row][col].set_empty(True)
 
     def print_board(self) -> None:
         for i in range(len(self.board)):
@@ -66,12 +66,12 @@ class Board:
             if init_pos[1] == final_pos[1]:
                 self.board[init_pos[0]+1][init_pos[1]].set_empty(True)
             if init_pos[1] < final_pos[1]:
-                self.board[init_pos[1]+1][init_pos[1]+1].set_empty(True)
+                self.board[init_pos[0]+1][init_pos[1]+1].set_empty(True)
         elif init_pos[0] > final_pos[0]:
             if init_pos[1] == final_pos[1]:
                 self.board[init_pos[0]-1][init_pos[1]].set_empty(True)
             if init_pos[1] > final_pos[1]:
-                self.board[init_pos[1]-1][init_pos[1]-1].set_empty(True)
+                self.board[init_pos[0]-1][init_pos[1]-1].set_empty(True)
         else:
             if init_pos[1] < final_pos[1]:
                 self.board[init_pos[0]][init_pos[1]+1].set_empty(True)
@@ -82,33 +82,15 @@ class Board:
         count = 0
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
-                if not self.board[i][j] == -1:
-                    count +1
+                if not self.board[i][j].is_empty():
+                    count += 1
         return count
-
-    def each_has_neighbors(self) -> bool:
-        #call check if has neighbors in each peg
-        for i in range(len(self.board)):
-            for j in range(len(self.board[i])):
-                if self.in_bounds(str(i - 1), str(j - 1)) and not self.board[i - 1][j - 1].is_empty():
-                    return True
-                if self.in_bounds(str(i - 1), str(j + 1)) and not self.board[i - 1][j + 1].is_empty():
-                    return True
-                if self.in_bounds(str(i), str(j - 1)) and not self.board[i][j - 1].is_empty():
-                    return True
-                if self.in_bounds(str(i), str(j + 1)) and not self.board[i][j + 1].is_empty():
-                    return True
-                if self.in_bounds(str(i + 1), str(j - 1)) and not self.board[i + 1][j - 1].is_empty():
-                    return True
-                if self.in_bounds(str(i + 1), str(j + 1)) and not self.board[i + 1][j + 1].is_empty():
-                    return True
-        return False
 
     def has_legal_moves(self) -> bool:
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 if self.board[i][j].is_empty():
-                    pass
+                    continue
                 if self.in_bounds(str(i+2), str(j)):
                     if self.is_legal_move(self.board[i][j], self.board[i+2][j]):
                         return True
@@ -127,7 +109,6 @@ class Board:
                 if self.in_bounds(str(i), str(j+2)):
                     if self.is_legal_move(self.board[i][j], self.board[i][j+2]):
                         return True
-        print("this game done")
         return False
     
     def get_peg(self, i: str, j: str) -> Peg:

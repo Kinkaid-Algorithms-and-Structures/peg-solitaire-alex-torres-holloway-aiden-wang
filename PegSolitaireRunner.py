@@ -35,10 +35,10 @@ class PegSolitaireRunner:
             game_board.move(game_board.get_peg(cur_row, cur_col), game_board.get_peg(to_row, to_col))
             game_board.remove(game_board.get_peg(cur_row, cur_col), game_board.get_peg(to_row, to_col))
             print("Good move!")
-            if (game_board.each_has_neighbors == False and game_board.get_peg_count > 1) or not game_board.has_legal_moves():
+            if not (game_board.has_legal_moves()):
                 game = False
                 print("You lost!")
-            if game_board.get_peg_count == 1:
+            if game_board.get_peg_count() == 1:
                 game = False
                 print("You won!")
 
