@@ -34,17 +34,22 @@ class Board:
     def is_legal_move(self, current_peg: Peg, target_peg: Peg) -> bool:
         init_pos = current_peg.get_pos()
         final_pos = target_peg.get_pos()
+        if self.board[init_pos[0]][init_pos[1]].is_empty():
+            print("Trying to move empty peg")
+            return False
         if not self.board[final_pos[0]][final_pos[1]].is_empty():
             print("Not empty at target")
             return False
         if final_pos[0] == init_pos[0] + 2 or final_pos[0] == init_pos[0] - 2:
             if not (final_pos[1] == init_pos[1] or final_pos[1] == init_pos[1] + 2 or final_pos[1] == init_pos[1] - 2):
-                print("Up down row no good")
+                print("Not legal move (going up/down)")
                 return False
         if final_pos[0] == init_pos[0]:
             if not (final_pos[1] == init_pos[1] + 2 or final_pos[1] == init_pos[1] - 2):
-                print("L/R row no good")
+                print("Not legal move (going L/R)")
                 return False
+        if not (final_pos[0] == init_pos[0] or final_pos[0] == init_pos[0] + 2 or final_pos[0] == init_pos[0] - 2):
+            return False
         return True
 
 
@@ -54,8 +59,24 @@ class Board:
         self.board[init_pos[0]][init_pos[1]].set_empty(True)
         self.board[final_pos[0]][final_pos[1]].set_empty(False)
 
-    def remove(self, current_pos: Peg, target_pos: Peg) -> None:
-        pass
+    def remove(self, current_peg: Peg, target_peg: Peg) -> None:
+        init_pos = current_peg.get_pos()
+        final_pos = target_peg.get_pos()
+        if init_pos[0] < final_pos[0]:
+            if init_pos[1] == final_pos[1]:
+                self.board[init_pos[0]+1][init_pos[1]].set_empty(True)
+            if init_pos[1] < final_pos[1]:
+                self.board[init_pos[1]+1][init_pos[1]+1].set_empty(True)
+        elif init_pos[0] > final_pos[0]:
+            if init_pos[1] == final_pos[1]:
+                self.board[init_pos[0]-1][init_pos[1]].set_empty(True)
+            if init_pos[1] > final_pos[1]:
+                self.board[init_pos[1]-1][init_pos[1]-1].set_empty(True)
+        else:
+            if init_pos[1] < final_pos[1]:
+                self.board[init_pos[0]][init_pos[1]+1].set_empty(True)
+            else:
+                self.board[init_pos[0]][init_pos[1]-1].set_empty(True)
 
     def get_peg_count(self) -> int:
         count = 0
@@ -81,15 +102,41 @@ class Board:
                     return True
                 if self.in_bounds(str(i + 1), str(j + 1)) and not self.board[i + 1][j + 1].is_empty():
                     return True
+        return False
 
+    def has_legal_moves(self) -> bool:
+        for i in range(len(self.board)):
+            for j in range(len(self.board[i])):
+                if self.board[i][j].is_empty():
+                    pass
+                if self.in_bounds(str(i+2), str(j)):
+                    if self.is_legal_move(self.board[i][j], self.board[i+2][j]):
+                        return True
+                if self.in_bounds(str(i+2), str(j+2)):
+                    if self.is_legal_move(self.board[i][j], self.board[i+2][j+2]):
+                        return True
+                if self.in_bounds(str(i-2), str(j)):
+                    if self.is_legal_move(self.board[i][j], self.board[i-2][j]):
+                        return True
+                if self.in_bounds(str(i-2), str(j-2)):
+                    if self.is_legal_move(self.board[i][j], self.board[i-2][j-2]):
+                        return True
+                if self.in_bounds(str(i), str(j-2)):
+                    if self.is_legal_move(self.board[i][j], self.board[i][j-2]):
+                        return True
+                if self.in_bounds(str(i), str(j+2)):
+                    if self.is_legal_move(self.board[i][j], self.board[i][j+2]):
+                        return True
+        print("this game done")
         return False
     
     def get_peg(self, i: str, j: str) -> Peg:
         return self.board[int(i)][int(j)]
 
     def in_bounds(self, i: str, j:str) -> bool:
-        if int(i) < len(self.board) and int(j) < len(self.board[int(i)]):
+        if len(self.board) > int(i) >= 0 and len(self.board[int(i)]) > int(j) >= 0:
             return True
+        return False
 
 
 
