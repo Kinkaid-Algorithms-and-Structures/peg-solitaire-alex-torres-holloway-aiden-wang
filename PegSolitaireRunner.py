@@ -22,25 +22,32 @@ class PegSolitaireRunner:
         game_board.create_board()
         print("Welcome to peg solitaire!")
         print("The pluses are pegs, and the circles are holes.")
+        print("The rows and columns are 0 indexed, and the columns are only the places where pegs can go.")
+        print("The underscores that make up the edges of the board do not count as columns (i.e. row 0 only has 1 column,'0')")
         while game:
             game_board.print_board()
             while True:
-                cur_row, cur_col = input("\nRow and column of peg to move; separate row and col with spaces (start from 0 and put a space between x and y) ").replace(",", "").split()
-                to_row, to_col = input("Row and column of place to move to; separate row and col with spaces (start from 0 and put a space between x and y) ").replace(",","").split()
+                cur_row, cur_col = input("\nRow and column of peg to move, separated by spaces: ").replace(",", "").split()
+                to_row, to_col = input("Row and column of place to move to, separated by spaces: ").replace(",","").split()
                 if not game_board.in_bounds(cur_row, cur_col) or not game_board.in_bounds(to_row, to_col):
                     print("Move out of bounds. Try another move.")
                     continue
                 if game_board.is_legal_move(game_board.get_peg(cur_row, cur_col), game_board.get_peg(to_row, to_col)):
                     break
+                else:
+                    print(f"The move ({cur_row}, {cur_col}) to ({to_row}, {to_col}) is illegal. Try again.")
             game_board.move(game_board.get_peg(cur_row, cur_col), game_board.get_peg(to_row, to_col))
             game_board.remove(game_board.get_peg(cur_row, cur_col), game_board.get_peg(to_row, to_col))
             print("Good move!")
-            if not (game_board.has_legal_moves()):
-                game = False
-                print("You lost!")
             if game_board.get_peg_count() == 1:
                 game = False
-                print("You won!")
+                game_board.print_board()
+                print("\nYou won!")
+            elif not (game_board.has_legal_moves()):
+                game = False
+                game_board.print_board()
+                print("\nYou lost!")
+
 
 if __name__ == "__main__":
     game = PegSolitaireRunner()

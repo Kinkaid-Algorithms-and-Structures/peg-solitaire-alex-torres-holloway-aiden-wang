@@ -10,10 +10,9 @@ class Board:
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 self.board[i][j] = Peg(i, j)
-        for j in range(15):
-            row = random.randint(0, len(self.board)-1)
-            col = random.randint(0, len(self.board[row])-1)
-            self.board[row][col].set_empty(True)
+        row = random.randint(0, len(self.board)-1)
+        col = random.randint(0, len(self.board[row])-1)
+        self.board[row][col].set_empty(True)
 
     def print_board(self) -> None:
         for i in range(len(self.board)):
@@ -35,19 +34,36 @@ class Board:
         init_pos = current_peg.get_pos()
         final_pos = target_peg.get_pos()
         if self.board[init_pos[0]][init_pos[1]].is_empty():
-            print("Trying to move empty peg")
             return False
         if not self.board[final_pos[0]][final_pos[1]].is_empty():
-            print("Not empty at target")
             return False
-        if final_pos[0] == init_pos[0] + 2 or final_pos[0] == init_pos[0] - 2:
-            if not (final_pos[1] == init_pos[1] or final_pos[1] == init_pos[1] + 2 or final_pos[1] == init_pos[1] - 2):
-                print("Not legal move (going up/down)")
+        if final_pos[0] == init_pos[0] + 2:
+            if not (final_pos[1] == init_pos[1] or final_pos[1] == init_pos[1] + 2):
                 return False
+            elif final_pos[1] == init_pos[1]:
+                if self.board[init_pos[0]+1][init_pos[1]].is_empty():
+                    return False
+            elif final_pos[1] == init_pos[1] + 2:
+                if self.board[init_pos[0]+1][init_pos[1]+1].is_empty():
+                    return False
+        if final_pos[0] == init_pos[0] - 2:
+            if not (final_pos[1] == init_pos[1] or final_pos[1] == init_pos[1] - 2):
+                return False
+            elif final_pos[1] == init_pos[1]:
+                if self.board[init_pos[0]-1][init_pos[1]].is_empty():
+                    return False
+            elif final_pos[1] == init_pos[1] - 2:
+                if self.board[init_pos[0]-1][init_pos[1]-1].is_empty():
+                    return False
         if final_pos[0] == init_pos[0]:
             if not (final_pos[1] == init_pos[1] + 2 or final_pos[1] == init_pos[1] - 2):
-                print("Not legal move (going L/R)")
                 return False
+            elif final_pos[1] == init_pos[1] + 2:
+                if self.board[init_pos[0]][init_pos[1]+1].is_empty():
+                    return False
+            elif final_pos[1] == init_pos[1] - 2:
+                if self.board[init_pos[0]][init_pos[1]-1].is_empty():
+                    return False
         if not (final_pos[0] == init_pos[0] or final_pos[0] == init_pos[0] + 2 or final_pos[0] == init_pos[0] - 2):
             return False
         return True
